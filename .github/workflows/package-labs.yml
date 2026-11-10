@@ -1,0 +1,40 @@
+name: package-labs
+
+on:
+  release:
+    types: [published]
+
+permissions:
+  contents: write
+
+jobs:
+  package:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+
+      - name: Build one ZIP per registered lab
+        run: |
+          python3 - <<'PY'
+          import pathlib
+
+          paths = sorted(
+              str(p.parent)
+              for p in pathlib.Path(".").rglob("lab.yml")
+              if "templates" not in p.parts and ".git" not in p.parts
+          )
+          if not paths:
+              raise SystemExit("no labs found (no lab.yml files in the repository)")
+          pathlib.Path("/tmp/lab-paths.txt").write_text("\n".join(paths), encoding="utf-8")
+          print(f"Packaging {len(paths)} labs:")
+          print("\n".join(paths))
+          PY
+          while IFS= read -r lab_path; do
+            sh tools/package-lab.sh "$lab_path" dist
+          done < /tmp/lab-paths.txt
+          ls -lh dist
+
+      - name: Attach the ZIPs to the release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release upload "${{ github.event.release.tag_name }}" dist/*.zip --clobber
