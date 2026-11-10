@@ -1,0 +1,14 @@
+id: idor-on-user-records-medium
+title: "IDOR on user records"
+category: "Broken Access Control [A01:2021 / A01:2025]"
+difficulty: medium
+est_minutes: 75
+stack: "Python / FastAPI"
+ram_mb: 512
+cost: free
+tested_versions:
+  docker: "28.5.2"
+  compose: "2.40.3"
+  python: "3.13.18"
+  fastapi: "0.118.2"
+  uvicorn: "0.34.3"
