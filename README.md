@@ -53,7 +53,7 @@ Each lab includes three hints in its `hints/` folder. They are progressive — o
 
 | Lab | Difficulty | Topic | Local port |
 | --- | --- | --- | --- |
-| [IDOR on user records — Easy](WEB/Broken%20Access%20Control/IDOR/idor-on-user-records-easy) | Easy | Insecure direct object reference | 8000 |
+| [IDOR on user records — Easy](https://github.com/zayn-910/free-cyberlabs/tree/main/WEB/Broken%20Access%20Control/IDOR/idor-on-user-records) | Easy | Insecure direct object reference | 8000 |
 | [IDOR on user records — Medium](WEB/Broken%20Access%20Control/IDOR/idor-on-user-records-medium) | Medium | Insecure direct object reference | 8001 |
 | [IDOR on user records — Hard](WEB/Broken%20Access%20Control/IDOR/idor-on-user-records-hard) | Hard | Insecure direct object reference | 8002 |
 
