@@ -22,7 +22,7 @@ No accounts. No paid services. No cloud. Everything runs locally in Docker.
 ### Option B — Clone the repository
 
 ```sh
-git clone <repository-url>
+git clone https://github.com/zayn-910/free-cyberlabs.git
 cd "free-cyberlabs/WEB/Broken Access Control/IDOR/idor-on-user-records-hard"
 docker compose up -d --build
 ```
