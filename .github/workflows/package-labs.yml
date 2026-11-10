@@ -1,11 +1,5 @@
 name: package-labs
 
-# Keeps ONE permanent release (tag: latest) up to date automatically.
-# Every push to main that touches a lab rebuilds all lab ZIPs and replaces
-# the assets on the "latest" release. Students always download from:
-#   https://github.com/<owner>/<repo>/releases/tag/latest
-# No manual releases are needed. Labs are discovered automatically: any
-# folder containing a lab.yml is packaged.
 
 on:
   push:
