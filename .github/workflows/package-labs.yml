@@ -1,8 +1,21 @@
 name: package-labs
 
+# Keeps ONE permanent release (tag: latest) up to date automatically.
+# Every push to main that touches a lab rebuilds all lab ZIPs and replaces
+# the assets on the "latest" release. Students always download from:
+#   https://github.com/<owner>/<repo>/releases/tag/latest
+# No manual releases are needed. Labs are discovered automatically: any
+# folder containing a lab.yml is packaged.
+
 on:
-  release:
-    types: [published]
+  push:
+    branches: [main]
+    paths:
+      - "WEB/**"
+      - "NETWORK/**"
+      - "tools/package-lab.sh"
+      - ".github/workflows/package-labs.yml"
+  workflow_dispatch:
 
 permissions:
   contents: write
@@ -13,7 +26,7 @@ jobs:
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
 
-      - name: Build one ZIP per registered lab
+      - name: Build one ZIP per lab
         run: |
           python3 - <<'PY'
           import pathlib
@@ -25,16 +38,24 @@ jobs:
           )
           if not paths:
               raise SystemExit("no labs found (no lab.yml files in the repository)")
-          pathlib.Path("/tmp/lab-paths.txt").write_text("\n".join(paths), encoding="utf-8")
+          pathlib.Path("/tmp/lab-paths.txt").write_text("\n".join(paths) + "\n", encoding="utf-8")
           print(f"Packaging {len(paths)} labs:")
           print("\n".join(paths))
           PY
-          while IFS= read -r lab_path; do
+          while IFS= read -r lab_path || [ -n "$lab_path" ]; do
+            [ -n "$lab_path" ] || continue
             sh tools/package-lab.sh "$lab_path" dist
           done < /tmp/lab-paths.txt
           ls -lh dist
 
-      - name: Attach the ZIPs to the release
+      - name: Replace the assets on the permanent latest release
         env:
           GH_TOKEN: ${{ github.token }}
-        run: gh release upload "${{ github.event.release.tag_name }}" dist/*.zip --clobber
+        run: |
+          # Recreate the release each time so removed/renamed labs do not
+          # leave stale ZIPs behind.
+          gh release delete latest --cleanup-tag --yes || true
+          gh release create latest dist/*.zip \
+            --title "Latest labs" \
+            --notes "Automatically updated on every push to main. Download the ZIP for the lab you want, unzip it, and run: docker compose up -d --build" \
+            --prerelease
