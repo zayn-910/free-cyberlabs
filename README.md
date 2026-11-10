@@ -109,3 +109,28 @@ docker compose up -d --build
 ```
 
 Then check `docker compose ps` and `docker compose logs app` for details before opening an issue.
+
+## An honest note
+
+The source code of every lab in this repo is public. That means you *can*
+open the code, spot the bug in a few minutes, and skip the hard part.
+
+I'm not going to stop you, and I'm not going to pretend I can. It's your
+learning and your choice.
+
+But here's the thing: real targets don't come with source code. The skill
+you're building is finding a weakness by poking at something you can't see
+into, and that only grows when you struggle with it. Reading the answer
+feels like progress, but it won't make you better.
+
+A better way to use these labs:
+
+1. **Try it as a black box first.** Use only the running app, a browser,
+   and your tools.
+2. **Use the hints one at a time** when you're stuck. There are three per
+   lab, and they get more direct each time.
+3. **Read the code last**, after you've solved it, to understand why it was
+   vulnerable and how to fix it. That part is a real skill too.
+
+Being stuck is the training. Stay with it a little longer than is
+comfortable, and you'll come out better.
