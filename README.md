@@ -8,7 +8,7 @@ No accounts. No paid services. No cloud. Everything runs locally in Docker.
 
 ### Option A — Download one lab (easiest)
 
-1. Go to the **Releases** page of this repository.
+1. Go to the **Releases** page of this repository. Only download lab ZIPs from this repository's official Releases page — copies hosted anywhere else are not official and should not be trusted.
 2. Download the ZIP for the lab you want, for example `idor-on-user-records-hard.zip`.
 3. Unzip it and open a terminal in the unzipped folder.
 4. Start the lab:
