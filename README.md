@@ -45,26 +45,6 @@ To start a lab over with fresh data and a new value:
 
 Each lab includes three hints in its `hints/` folder. They are progressive — open one at a time, only when you get stuck.
 
-## Available labs
-
-### WEB
-
-#### Broken Access Control
-
-| Lab | Difficulty | Topic | Local port |
-| --- | --- | --- | --- |
-| [IDOR on user records — Easy](https://github.com/zayn-910/free-cyberlabs/tree/main/WEB/Broken%20Access%20Control/IDOR/idor-on-user-records) | Easy | Insecure direct object reference | 8000 |
-| [IDOR on user records — Medium](https://github.com/zayn-910/free-cyberlabs/tree/main/WEB/Broken%20Access%20Control/IDOR/idor-on-user-records-medium) | Medium | Insecure direct object reference | 8001 |
-| [IDOR on user records — Hard](https://github.com/zayn-910/free-cyberlabs/tree/main/WEB/Broken%20Access%20Control/IDOR/idor-on-user-records-hard) | Hard | Insecure direct object reference | 8002 |
-
-More categories and topics will be added over time. Labs are organized as:
-
-```text
-<Platform>/<Category>/<Topic>/<lab-name>
-```
-
-For example: `WEB/Broken Access Control/IDOR/idor-on-user-records-hard`
-
 ## Requirements
 
 - Linux, macOS, or Windows with WSL2
