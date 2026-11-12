@@ -90,7 +90,7 @@ docker compose up -d --build
 
 Then check `docker compose ps` and `docker compose logs app` for details before opening an issue.
 
-## An honest note
+## Honest Note
 
 The source code of every lab in this repo is public. That means you *can*
 open the code, spot the bug in a few minutes, and skip the hard part.
