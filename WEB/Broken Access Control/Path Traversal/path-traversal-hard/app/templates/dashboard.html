@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block body %}
+<nav class="topbar">
+  <div class="brand">
+    <svg width="24" height="24" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
+      <rect width="40" height="40" rx="6" fill="#0f172a"/>
+      <path d="M10 28 L20 12 L30 28 Z" fill="none" stroke="#38bdf8" stroke-width="2.5" stroke-linejoin="round"/>
+      <circle cx="20" cy="22" r="2.5" fill="#38bdf8"/>
+    </svg>
+    <span>Cobalt Archive</span>
+  </div>
+  <div class="nav-right">
+    <span class="user-name">{{ user.n }}</span>
+    <span class="user-role">{{ user.r }}</span>
+    <a href="/logout" class="btn btn-sm">Sign Out</a>
+  </div>
+</nav>
+
+<main class="content">
+  <h2>Your Documents</h2>
+  <p class="muted">Files in your archive folder. Click to view.</p>
+
+  {% if documents %}
+  <table class="doc-table">
+    <thead>
+      <tr><th>File</th><th>Size</th><th></th></tr>
+    </thead>
+    <tbody>
+      {% for doc in documents %}
+      <tr>
+        <td class="fname">{{ doc.name }}</td>
+        <td class="fsize">{{ doc.size }} B</td>
+        <td><a href="/documents/view?filename={{ doc.name }}" class="btn btn-sm">View</a></td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% else %}
+  <p>No documents found.</p>
+  {% endif %}
+</main>
+{% endblock %}

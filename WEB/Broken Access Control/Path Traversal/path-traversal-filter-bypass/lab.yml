@@ -1,0 +1,11 @@
+id: path-traversal-filter-bypass
+title: "Path Traversal — Filter Bypass"
+category: "Broken Access Control [A01:2021 / A01:2025]"
+difficulty: medium
+est_minutes: 75
+stack: "Python / FastAPI"
+ram_mb: 512
+cost: free
+tested_versions:
+  docker: "27.x"
+  compose: "v2.29"

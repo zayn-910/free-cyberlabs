@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+{% block body %}
+<nav class="topbar topbar-admin">
+  <div class="brand">
+    <svg width="24" height="24" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
+      <rect width="40" height="40" rx="6" fill="#0f172a"/>
+      <path d="M10 28 L20 12 L30 28 Z" fill="none" stroke="#38bdf8" stroke-width="2.5" stroke-linejoin="round"/>
+      <circle cx="20" cy="22" r="2.5" fill="#38bdf8"/>
+    </svg>
+    <span>Cobalt Archive <em>Admin</em></span>
+  </div>
+  <div class="nav-right">
+    <a href="/admin/" class="btn btn-sm">Admin Home</a>
+    <a href="/dashboard" class="btn btn-sm">Dashboard</a>
+    <a href="/logout" class="btn btn-sm">Sign Out</a>
+  </div>
+</nav>
+
+<main class="content">
+  <h2>Archive File Reader</h2>
+  <p class="muted">Enter a path relative to <code>/app/data/archive</code>. Use forward slashes.</p>
+
+  <form id="reader-form" class="reader-form">
+    <div class="input-row">
+      <span class="input-prefix">/app/data/archive/</span>
+      <input type="text" id="path-input" name="path" placeholder="e.g. sales/q3_report.txt" autocomplete="off" required>
+      <button type="submit" class="btn btn-primary">Read File</button>
+    </div>
+  </form>
+
+  <div id="result" class="result-box" style="display:none;">
+    <div class="result-header">
+      <span id="result-path"></span>
+    </div>
+    <pre id="result-content"></pre>
+  </div>
+
+  <div id="error" class="error-box" style="display:none;">
+    <span id="error-msg"></span>
+  </div>
+</main>
+
+<script>
+document.getElementById('reader-form').addEventListener('submit', async function(e) {
+  e.preventDefault();
+  var pathVal = document.getElementById('path-input').value;
+  var resultDiv = document.getElementById('result');
+  var errorDiv = document.getElementById('error');
+  resultDiv.style.display = 'none';
+  errorDiv.style.display = 'none';
+
+  try {
+    var resp = await fetch('/admin/api/read', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({path: pathVal})
+    });
+    var data = await resp.json();
+    if (resp.ok) {
+      document.getElementById('result-path').textContent = data.path;
+      document.getElementById('result-content').textContent = data.content;
+      resultDiv.style.display = 'block';
+    } else {
+      var msg = data.error || 'Unknown error';
+      if (data.path) msg += ' (' + data.path + ')';
+      document.getElementById('error-msg').textContent = msg;
+      errorDiv.style.display = 'block';
+    }
+  } catch (err) {
+    document.getElementById('error-msg').textContent = 'Request failed: ' + err;
+    errorDiv.style.display = 'block';
+  }
+});
+</script>
+{% endblock %}

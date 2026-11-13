@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="login-box">
+  <div class="logo">
+    <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect width="48" height="48" rx="12" fill="#2a7f62"/>
+      <path d="M24 10v28M10 24h28" stroke="#fff" stroke-width="5" stroke-linecap="round"/>
+    </svg>
+  </div>
+  <h1>Greenfield Medical Clinic</h1>
+  <p class="subtitle">Patient Portal</p>
+
+  {% if error %}
+  <div class="alert alert-error">{{ error }}</div>
+  {% endif %}
+
+  <form method="post" action="/login" class="login-form">
+    <label for="username">Username</label>
+    <input type="text" id="username" name="username" autocomplete="username" required autofocus>
+
+    <label for="password">Password</label>
+    <input type="password" id="password" name="password" autocomplete="current-password" required>
+
+    <button type="submit" class="btn btn-primary">Sign In</button>
+  </form>
+
+  <p class="help-text">For account issues, call the front desk at (555) 012-3456.</p>
+</div>
+{% endblock %}

@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block content %}
+<header class="topbar">
+  <div class="brand">
+    <svg width="28" height="28" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect width="48" height="48" rx="8" fill="#1e3a5f"/>
+      <path d="M12 36V12l12 18 12-18v24" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+    </svg>
+    <span>Meridian Consulting</span>
+  </div>
+  <div class="user-info">
+    <span>{{ user.display_name }}</span>
+    <a href="/logout" class="btn btn-small">Sign Out</a>
+  </div>
+</header>
+
+<main class="dashboard">
+  <h2>Your Documents</h2>
+  <p class="muted">Project files assigned to you. Click a file name to view its contents.</p>
+
+  {% if documents %}
+  <table class="doc-table">
+    <thead>
+      <tr>
+        <th>File Name</th>
+        <th>Size</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for doc in documents %}
+      <tr>
+        <td class="fname">{{ doc.name }}</td>
+        <td class="fsize">{{ doc.size }} bytes</td>
+        <td><a href="/documents/download?filename={{ doc.name }}" class="btn btn-small">View</a></td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% else %}
+  <p>No documents are available at this time.</p>
+  {% endif %}
+</main>
+{% endblock %}

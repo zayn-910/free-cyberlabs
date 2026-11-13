@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block body %}
+<nav class="topbar topbar-admin">
+  <div class="brand">
+    <svg width="24" height="24" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
+      <rect width="40" height="40" rx="6" fill="#0f172a"/>
+      <path d="M10 28 L20 12 L30 28 Z" fill="none" stroke="#38bdf8" stroke-width="2.5" stroke-linejoin="round"/>
+      <circle cx="20" cy="22" r="2.5" fill="#38bdf8"/>
+    </svg>
+    <span>Cobalt Archive <em>Admin</em></span>
+  </div>
+  <div class="nav-right">
+    <span class="user-name">{{ user.n }}</span>
+    <a href="/admin/reader" class="btn btn-sm">File Reader</a>
+    <a href="/dashboard" class="btn btn-sm">Dashboard</a>
+    <a href="/logout" class="btn btn-sm">Sign Out</a>
+  </div>
+</nav>
+
+<main class="content">
+  <h2>Admin Panel</h2>
+
+  <section class="admin-card">
+    <h3>System Information</h3>
+    <table class="info-table">
+      <tr><td>Application</td><td>Cobalt Archive v2.4.1</td></tr>
+      <tr><td>Server</td><td>uvicorn / Python 3.11</td></tr>
+      <tr><td>Application root</td><td><code>/app</code></td></tr>
+      <tr><td>Archive storage</td><td><code>/app/data/archive</code></td></tr>
+      <tr><td>Configuration</td><td><code>/app/config</code></td></tr>
+      <tr><td>Logs</td><td><code>/app/logs</code></td></tr>
+      <tr><td>Status</td><td><span class="status-ok">All systems operational</span></td></tr>
+    </table>
+  </section>
+
+  <section class="admin-card">
+    <h3>Tools</h3>
+    <ul class="admin-links">
+      <li><a href="/admin/reader">Archive File Reader</a> — Browse and view files within the archive storage.</li>
+    </ul>
+  </section>
+
+  <section class="admin-card">
+    <h3>Storage Summary</h3>
+    <table class="info-table">
+      <tr><td>Total users with archives</td><td>6</td></tr>
+      <tr><td>Total archived files</td><td>142</td></tr>
+      <tr><td>Storage used</td><td>38.4 MB</td></tr>
+    </table>
+  </section>
+</main>
+{% endblock %}

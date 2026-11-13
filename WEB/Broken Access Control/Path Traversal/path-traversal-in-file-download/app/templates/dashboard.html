@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block content %}
+<header class="topbar">
+  <div class="brand">
+    <svg width="32" height="32" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect width="48" height="48" rx="12" fill="#2a7f62"/>
+      <path d="M24 10v28M10 24h28" stroke="#fff" stroke-width="5" stroke-linecap="round"/>
+    </svg>
+    <span>Greenfield Medical Clinic</span>
+  </div>
+  <div class="user-info">
+    <span>Signed in as <strong>{{ user.display_name }}</strong></span>
+    <a href="/logout" class="btn btn-small">Sign Out</a>
+  </div>
+</header>
+
+<main class="dashboard">
+  <h2>Your Documents</h2>
+  <p class="muted">Below are the documents on file for your account. Click <em>Download</em> to save a copy.</p>
+
+  {% if documents %}
+  <table class="doc-table">
+    <thead>
+      <tr>
+        <th>File Name</th>
+        <th>Size</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for doc in documents %}
+      <tr>
+        <td class="fname">{{ doc.name }}</td>
+        <td class="fsize">{{ doc.size }} bytes</td>
+        <td><a href="/documents/download?filename={{ doc.name }}" class="btn btn-small">Download</a></td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% else %}
+  <p>No documents are available at this time.</p>
+  {% endif %}
+</main>
+{% endblock %}

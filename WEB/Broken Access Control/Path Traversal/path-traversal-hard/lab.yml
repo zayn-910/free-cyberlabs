@@ -1,0 +1,11 @@
+id: path-traversal-hard
+title: "Path Traversal — Chained Exploits"
+category: "Broken Access Control [A01:2021 / A01:2025]"
+difficulty: hard
+est_minutes: 150
+stack: "Python / FastAPI"
+ram_mb: 512
+cost: free
+tested_versions:
+  docker: "27.x"
+  compose: "v2.29"

@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="login-box">
+  <div class="logo">
+    <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect width="48" height="48" rx="8" fill="#1e3a5f"/>
+      <path d="M12 36V12l12 18 12-18v24" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+    </svg>
+  </div>
+  <h1>Meridian Consulting</h1>
+  <p class="subtitle">Document Portal</p>
+
+  {% if error %}
+  <div class="alert alert-error">{{ error }}</div>
+  {% endif %}
+
+  <form method="post" action="/login" class="login-form">
+    <label for="username">Username</label>
+    <input type="text" id="username" name="username" autocomplete="username" required autofocus>
+
+    <label for="password">Password</label>
+    <input type="password" id="password" name="password" autocomplete="current-password" required>
+
+    <button type="submit" class="btn btn-primary">Sign In</button>
+  </form>
+
+  <p class="help-text">Contact IT support at ext. 4400 for account issues.</p>
+</div>
+{% endblock %}
