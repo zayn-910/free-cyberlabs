@@ -1,6 +1,5 @@
 name: package-labs
 
-
 on:
   push:
     branches: [main]
@@ -42,14 +41,13 @@ jobs:
           done < /tmp/lab-paths.txt
           ls -lh dist
 
-      - name: Replace the assets on the permanent latest release
+      - name: Publish ZIPs to the permanent latest release
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          # Recreate the release each time so removed/renamed labs do not
-          # leave stale ZIPs behind.
-          gh release delete latest --cleanup-tag --yes || true
-          gh release create latest dist/*.zip \
-            --title "Latest labs" \
-            --notes "Automatically updated on every push to main. Download the ZIP for the lab you want, unzip it, and run: docker compose up -d --build" \
-            --prerelease
+          gh release view latest >/dev/null 2>&1 || \
+            gh release create latest \
+              --title "Latest labs" \
+              --notes "Automatically updated on every push to main. Download the ZIP for the lab you want, unzip it, and run: docker compose up -d --build" \
+              --latest
+          gh release upload latest dist/*.zip --clobber
