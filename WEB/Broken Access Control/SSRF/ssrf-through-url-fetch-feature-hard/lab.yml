@@ -1,4 +1,4 @@
-id: ssrf-through-url-fetch-feature
+id: ssrf-through-url-fetch-feature-hard
 title: "SSRF through URL fetch feature"
 author: zayn-910
 category: "Broken Access Control [A01:2021 / A01:2025]"
