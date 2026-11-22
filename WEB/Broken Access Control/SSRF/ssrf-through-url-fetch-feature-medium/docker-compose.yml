@@ -1,0 +1,119 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: cedar-ridge-portal:1.0.0
+    command: ["gunicorn", "--bind", "0.0.0.0:8000", "--workers", "2", "--threads", "2", "--timeout", "10", "app.web:app"]
+    volumes:
+      - runtime:/run/lab
+    networks:
+      - clinic
+    depends_on:
+      directory:
+        condition: service_healthy
+      handbook:
+        condition: service_healthy
+    read_only: true
+    tmpfs:
+      - /tmp:rw,noexec,nosuid,size=16m
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/health', timeout=2).read()"]
+      interval: 5s
+      timeout: 3s
+      retries: 12
+      start_period: 5s
+
+  directory:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: cedar-ridge-portal:1.0.0
+    entrypoint: ["python", "-m", "app.directory"]
+    volumes:
+      - runtime:/run/lab:ro
+    networks:
+      - clinic
+    read_only: true
+    tmpfs:
+      - /tmp:rw,noexec,nosuid,size=8m
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8081/health', timeout=2).read()"]
+      interval: 5s
+      timeout: 3s
+      retries: 12
+      start_period: 2s
+
+  handbook:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: cedar-ridge-portal:1.0.0
+    entrypoint: ["python", "-m", "app.handbook"]
+    networks:
+      clinic:
+        aliases:
+          - handbook.cedarridge.test
+    read_only: true
+    tmpfs:
+      - /tmp:rw,noexec,nosuid,size=8m
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8082/health', timeout=2).read()"]
+      interval: 5s
+      timeout: 3s
+      retries: 12
+      start_period: 2s
+
+  frontdesk:
+    image: nginxinc/nginx-unprivileged:1.27.4-alpine
+    entrypoint: ["/bin/sh", "-c"]
+    command: ["echo 'Cedar Ridge front desk ready | Lab by zayn-910'; exec nginx -g 'daemon off;'"]
+    ports:
+      - "127.0.0.1:8080:8080"
+    volumes:
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
+    networks:
+      - edge
+      - clinic
+    depends_on:
+      app:
+        condition: service_healthy
+    read_only: true
+    tmpfs:
+      - /tmp:rw,noexec,nosuid,size=16m
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q -O /dev/null http://127.0.0.1:8080/health || exit 1"]
+      interval: 5s
+      timeout: 3s
+      retries: 12
+      start_period: 2s
+
+volumes:
+  runtime:
+
+networks:
+  clinic:
+    driver: bridge
+    internal: true
+  edge:
+    driver: bridge

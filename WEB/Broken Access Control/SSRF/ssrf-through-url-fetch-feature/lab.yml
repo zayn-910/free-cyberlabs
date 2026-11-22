@@ -1,0 +1,11 @@
+id: ssrf-through-url-fetch-feature
+title: "SSRF through URL fetch feature"
+category: "Broken Access Control [A01:2021 / A01:2025]"
+difficulty: easy
+est_minutes: 30
+stack: "Python / Flask"
+ram_mb: 1024
+cost: free
+tested_versions:
+  docker: "not run locally (Docker unavailable in authoring environment)"
+  compose: "not run locally (Docker unavailable in authoring environment)"
